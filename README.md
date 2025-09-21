@@ -8,7 +8,7 @@ Welcome to my personal portfolio project! This repository contains the source co
 
 This website showcases my skills, projects, and experience as a developer. It is designed to be **fast, responsive, and visually appealing**.
 
-**Live Demo:** [Your Live Site URL Here]  
+   
 
 ---
 
