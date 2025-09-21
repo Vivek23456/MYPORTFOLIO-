@@ -28,7 +28,8 @@ To work on this project locally, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Vivek23456/myportfolio.git
+   git clone https://github.com/Vivek23456/MYPORTFOLIO
+   
    cd myportfolio
    
 Install dependencies:
