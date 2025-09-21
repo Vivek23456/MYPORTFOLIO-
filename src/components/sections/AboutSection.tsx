@@ -68,10 +68,8 @@ export const AboutSection = () => {
                   transition={{ delay: 0.4 }}
                   viewport={{ once: true }}
                 >
-                  I'm a passionate blockchain developer with over 3 years of experience 
-                  crafting innovative solutions on the Solana ecosystem. My journey began 
-                  with traditional web development, but I found my true calling in the 
-                  decentralized web.
+                  I thrive on exploring new technologies. In my first year, I focused on Java, data structures and algorithms, and Android development, even experimenting with Kali Linux for practical projects. Over time, I discovered the incredible potential of decentralized systems, and now I’m fully immersed in building innovative solutions on the Solana ecosystem.
+
                 </motion.p>
 
                 <motion.p
@@ -92,9 +90,8 @@ export const AboutSection = () => {
                   transition={{ delay: 0.6 }}
                   viewport={{ once: true }}
                 >
-                  When I'm not coding, you'll find me contributing to open-source projects, 
-                  writing technical articles, or exploring the latest developments in 
-                  blockchain technology.
+                When I’m not coding, I’m usually tinkering with open-source projects, sharing what I learn through articles, or diving into the latest innovations in blockchain technology.
+
                 </motion.p>
               </div>
 
