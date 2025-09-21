@@ -22,7 +22,7 @@ const projects = [
     category: 'DeFi',
     status: 'Live',
     links: {
-      demo: 'solana-lottery-three.vercel.app', // replace with your actual deployed demo
+      demo: 'https://solana-lottery-zeta.vercel.app', // replace with your actual deployed demo
       github: 'https://github.com/Vivek23456/SOLANA-LOTTERY'
     }
   }
