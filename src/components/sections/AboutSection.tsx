@@ -140,7 +140,7 @@ export const AboutSection = () => {
                     transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                   />
                   <a
-                    href="/Vivek_Resume.pdf"  // Place your resume in public folder
+                    href="/Vivek_Resume.pdf.pdf"  // Place your resume in public folder
                     download
                     target="_blank"
                     rel="noopener noreferrer"
