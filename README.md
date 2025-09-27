@@ -22,25 +22,7 @@ This website showcases my skills, projects, and experience as a developer. It is
 
 ---
 
-## 💻 Getting Started
-
-To work on this project locally, follow these steps:
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Vivek23456/MYPORTFOLIO
-   
-   cd myportfolio
-   
-Install dependencies:
-
-npm install
-
-
-Start the development server:
-
-npm run dev
-
+ 
  📦 Project Structure
 myportfolio/
 ├─ public/         # Static assets like images
