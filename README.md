@@ -66,5 +66,10 @@ LinkedIn: Vivek Atkari
 GitHub: Vivek23456
 
 Made with ❤️ using React, TypeScript, and Tailwind CSS
-© 2025 Vivek Atkari. All Rights Reserved.
-This project is my personal portfolio. You may not use or claim it as your own.
+
+## License
+This is my personal portfolio.  
+© 2025 Vivek Atkari. All Rights Reserved.  
+
+You may view this project, but you are not allowed to copy or claim it as your own.
+
