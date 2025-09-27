@@ -70,6 +70,5 @@ Made with ❤️ using React, TypeScript, and Tailwind CSS
 ## License
 This is my personal portfolio.  
 © 2025 Vivek Atkari. All Rights Reserved.  
-
-You may view this project, but you are not allowed to copy or claim it as your own.
+You may view this project, but you are not permitted to copy, modify, or claim it as your own.
 
