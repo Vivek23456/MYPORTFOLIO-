@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion';
+import { useDevicePerformance } from '../../hooks/use-device-performance';
 
 export const AnimatedBackground = () => {
+  const performance = useDevicePerformance();
+  const orbCount = performance === 'medium' ? 5 : 10;
+  const particleCount = performance === 'medium' ? 15 : 25;
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
       {/* Floating orbs */}
-      {Array.from({ length: 20 }).map((_, i) => (
+      {Array.from({ length: orbCount }).map((_, i) => (
         <motion.div
           key={i}
           className="absolute rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 blur-xl"
@@ -14,13 +18,13 @@ export const AnimatedBackground = () => {
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
           }}
-          animate={{
+          animate={performance === 'medium' ? undefined : {
             x: [0, Math.random() * 200 - 100, 0],
             y: [0, Math.random() * 200 - 100, 0],
             scale: [1, Math.random() * 0.5 + 0.8, 1],
             opacity: [0.3, 0.6, 0.3],
           }}
-          transition={{
+          transition={performance === 'medium' ? undefined : {
             duration: Math.random() * 10 + 10,
             repeat: Infinity,
             ease: "easeInOut",
@@ -39,14 +43,14 @@ export const AnimatedBackground = () => {
             radial-gradient(circle at 40% 80%, hsl(var(--accent)) 0%, transparent 50%)
           `,
         }}
-        animate={{
+        animate={performance === 'medium' ? undefined : {
           backgroundPosition: [
             "20% 50%, 80% 20%, 40% 80%",
             "60% 30%, 40% 70%, 80% 40%",
             "20% 50%, 80% 20%, 40% 80%",
           ],
         }}
-        transition={{
+        transition={performance === 'medium' ? undefined : {
           duration: 20,
           repeat: Infinity,
           ease: "easeInOut",
@@ -54,18 +58,18 @@ export const AnimatedBackground = () => {
       />
       
       {/* Particle rain */}
-      {Array.from({ length: 50 }).map((_, i) => (
+      {Array.from({ length: particleCount }).map((_, i) => (
         <motion.div
           key={`particle-${i}`}
           className="absolute w-1 h-1 bg-primary/60 rounded-full"
           style={{
             left: `${Math.random() * 100}%`,
           }}
-          animate={{
+          animate={performance === 'medium' ? undefined : {
             y: [-20, window.innerHeight + 20],
             opacity: [0, 1, 0],
           }}
-          transition={{
+          transition={performance === 'medium' ? undefined : {
             duration: Math.random() * 3 + 2,
             repeat: Infinity,
             delay: Math.random() * 5,

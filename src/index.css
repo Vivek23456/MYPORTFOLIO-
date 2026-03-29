@@ -107,15 +107,48 @@ All colors MUST be HSL.
     background: hsl(var(--primary));
   }
 
-  /* Cyber/Glow Effects */
-  .glow-text {
-    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    * {
+      animation-duration: 0.3s !important;
+      animation-delay: 0s !important;
+      transition-duration: 0.2s !important;
+    }
+    
+    /* Reduce motion for performance */
+    .animate-spin,
+    .animate-pulse,
+    .animate-bounce {
+      animation: none;
+    }
+    
+    /* Simplify gradients and effects */
+    .bg-gradient-to-r,
+    .bg-gradient-to-br {
+      background: hsl(var(--primary));
+    }
   }
 
-  .cyber-grid {
-    background-image: 
-      linear-gradient(hsl(var(--primary) / 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--primary) / 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
+  /* Low-performance device optimizations */
+  @media (max-width: 768px), (max-height: 600px), (-webkit-min-device-pixel-ratio: 2) {
+    * {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+    
+    /* Disable all motion */
+    .motion-safe * {
+      animation: none !important;
+    }
+  }
+
+  /* Reduce motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
 import { Button } from '../ui/button';
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
+import { useDevicePerformance } from '../../hooks/use-device-performance';
+
 export const HeroSection = () => {
+  const performance = useDevicePerformance();
+  const isLowPerformance = performance === 'low';
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Clean gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-card to-background" />
@@ -16,23 +20,23 @@ export const HeroSection = () => {
       <div className="container relative z-10 px-4">
         <div className="flex flex-col items-center justify-center min-h-screen text-center">
           {/* Name */}
-          <motion.h1 initial={{
+          <motion.h1 initial={isLowPerformance ? { opacity: 0 } : {
           opacity: 0,
           scale: 0.9,
           rotateX: -90
-        }} animate={{
+        }} animate={isLowPerformance ? { opacity: 1 } : {
           opacity: 1,
           scale: 1,
           rotateX: 0
-        }} transition={{
+        }} transition={isLowPerformance ? { delay: 0.2, duration: 0.5 } : {
           delay: 0.2,
           duration: 1.2,
           type: "spring",
           stiffness: 100
         }} className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
-            <motion.span animate={{
+            <motion.span animate={isLowPerformance ? undefined : {
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-          }} transition={{
+          }} transition={isLowPerformance ? undefined : {
             duration: 3,
             repeat: Infinity,
             ease: "linear"
@@ -40,10 +44,10 @@ export const HeroSection = () => {
               VIVEK
             </motion.span>
             <br className="text-slate-50" />
-            <motion.span animate={{
+            <motion.span animate={isLowPerformance ? undefined : {
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             scale: [1, 1.05, 1]
-          }} transition={{
+          }} transition={isLowPerformance ? undefined : {
             duration: 4,
             repeat: Infinity,
             ease: "easeInOut"
@@ -80,9 +84,9 @@ export const HeroSection = () => {
           }} whileTap={{
             scale: 0.95
           }} className="relative group">
-              <motion.div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-500" animate={{
+              <motion.div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-500" animate={isLowPerformance ? undefined : {
               rotate: [0, 360]
-            }} transition={{
+            }} transition={isLowPerformance ? undefined : {
               duration: 8,
               repeat: Infinity,
               ease: "linear"
@@ -93,10 +97,10 @@ export const HeroSection = () => {
                 <span className="relative z-10 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   View Projects
                 </span>
-                <motion.span className="ml-2 text-primary" animate={{
+                <motion.span className="ml-2 text-primary" animate={isLowPerformance ? undefined : {
                 x: [0, 5, 0],
                 scale: [1, 1.2, 1]
-              }} transition={{
+              }} transition={isLowPerformance ? undefined : {
                 repeat: Infinity,
                 duration: 1.5
               }}>
@@ -111,10 +115,10 @@ export const HeroSection = () => {
           }} whileTap={{
             scale: 0.95
           }} className="relative group">
-              <motion.div className="absolute -inset-1 bg-gradient-to-r from-accent via-secondary to-primary rounded-lg blur opacity-60 group-hover:opacity-90 transition duration-500" animate={{
+              <motion.div className="absolute -inset-1 bg-gradient-to-r from-accent via-secondary to-primary rounded-lg blur opacity-60 group-hover:opacity-90 transition duration-500" animate={isLowPerformance ? undefined : {
               rotate: [360, 0],
               scale: [1, 1.05, 1]
-            }} transition={{
+            }} transition={isLowPerformance ? undefined : {
               rotate: {
                 duration: 10,
                 repeat: Infinity,
@@ -152,16 +156,16 @@ export const HeroSection = () => {
           }} whileTap={{
             scale: 0.9
           }}>
-              <motion.div className="absolute -inset-2 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-0 group-hover:opacity-75 transition duration-300" animate={{
+              <motion.div className="absolute -inset-2 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-0 group-hover:opacity-75 transition duration-300" animate={isLowPerformance ? undefined : {
               rotate: [0, 360]
-            }} transition={{
+            }} transition={isLowPerformance ? undefined : {
               duration: 4,
               repeat: Infinity,
               ease: "linear"
             }} />
-              <motion.div className="relative w-12 h-12 bg-card/50 backdrop-blur-sm border border-border/30 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300" animate={{
+              <motion.div className="relative w-12 h-12 bg-card/50 backdrop-blur-sm border border-border/30 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300" animate={isLowPerformance ? undefined : {
               boxShadow: ["0 0 0 0 hsla(var(--primary), 0)", "0 0 0 4px hsla(var(--primary), 0.1)", "0 0 0 0 hsla(var(--primary), 0)"]
-            }} transition={{
+            }} transition={isLowPerformance ? undefined : {
               duration: 2,
               repeat: Infinity,
               delay: 0
@@ -178,16 +182,16 @@ export const HeroSection = () => {
           }} whileTap={{
             scale: 0.9
           }}>
-              <motion.div className="absolute -inset-2 bg-gradient-to-r from-secondary to-accent rounded-full blur opacity-0 group-hover:opacity-75 transition duration-300" animate={{
+              <motion.div className="absolute -inset-2 bg-gradient-to-r from-secondary to-accent rounded-full blur opacity-0 group-hover:opacity-75 transition duration-300" animate={isLowPerformance ? undefined : {
               rotate: [360, 0]
-            }} transition={{
+            }} transition={isLowPerformance ? undefined : {
               duration: 5,
               repeat: Infinity,
               ease: "linear"
             }} />
-              <motion.div className="relative w-12 h-12 bg-card/50 backdrop-blur-sm border border-border/30 rounded-full flex items-center justify-center text-muted-foreground hover:text-secondary hover:border-secondary/50 transition-all duration-300" animate={{
+              <motion.div className="relative w-12 h-12 bg-card/50 backdrop-blur-sm border border-border/30 rounded-full flex items-center justify-center text-muted-foreground hover:text-secondary hover:border-secondary/50 transition-all duration-300" animate={isLowPerformance ? undefined : {
               boxShadow: ["0 0 0 0 hsla(var(--secondary), 0)", "0 0 0 4px hsla(var(--secondary), 0.1)", "0 0 0 0 hsla(var(--secondary), 0)"]
-            }} transition={{
+            }} transition={isLowPerformance ? undefined : {
               duration: 2,
               repeat: Infinity,
               delay: 0.5
@@ -204,16 +208,16 @@ export const HeroSection = () => {
           }} whileTap={{
             scale: 0.9
           }}>
-              <motion.div className="absolute -inset-2 bg-gradient-to-r from-accent to-primary rounded-full blur opacity-0 group-hover:opacity-75 transition duration-300" animate={{
+              <motion.div className="absolute -inset-2 bg-gradient-to-r from-accent to-primary rounded-full blur opacity-0 group-hover:opacity-75 transition duration-300" animate={isLowPerformance ? undefined : {
               rotate: [0, -360]
-            }} transition={{
+            }} transition={isLowPerformance ? undefined : {
               duration: 6,
               repeat: Infinity,
               ease: "linear"
             }} />
-              <motion.div className="relative w-12 h-12 bg-card/50 backdrop-blur-sm border border-border/30 rounded-full flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent/50 transition-all duration-300" animate={{
+              <motion.div className="relative w-12 h-12 bg-card/50 backdrop-blur-sm border border-border/30 rounded-full flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent/50 transition-all duration-300" animate={isLowPerformance ? undefined : {
               boxShadow: ["0 0 0 0 hsla(var(--accent), 0)", "0 0 0 4px hsla(var(--accent), 0.1)", "0 0 0 0 hsla(var(--accent), 0)"]
-            }} transition={{
+            }} transition={isLowPerformance ? undefined : {
               duration: 2,
               repeat: Infinity,
               delay: 1
@@ -226,41 +230,45 @@ export const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Floating Animation Elements */}
-        <motion.div className="absolute top-20 left-10" animate={{
-        y: [0, -20, 0],
-        rotate: [0, 180, 360]
-      }} transition={{
-        duration: 8,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }}>
-          <div className="w-4 h-4 bg-primary/30 rounded-full blur-sm" />
-        </motion.div>
-        
-        <motion.div className="absolute top-40 right-20" animate={{
-        x: [0, 30, 0],
-        scale: [1, 1.2, 1]
-      }} transition={{
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 1
-      }}>
-          <div className="w-6 h-6 bg-secondary/30 rounded-full blur-sm" />
-        </motion.div>
-        
-        <motion.div className="absolute bottom-40 left-1/4" animate={{
-        y: [0, -40, 0],
-        x: [0, 20, 0]
-      }} transition={{
-        duration: 10,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 2
-      }}>
-          <div className="w-3 h-3 bg-accent/40 rounded-full blur-sm" />
-        </motion.div>
+        {/* Floating Animation Elements - Only on high/medium performance */}
+        {!isLowPerformance && (
+          <>
+            <motion.div className="absolute top-20 left-10" animate={{
+            y: [0, -20, 0],
+            rotate: [0, 180, 360]
+          }} transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}>
+              <div className="w-4 h-4 bg-primary/30 rounded-full blur-sm" />
+            </motion.div>
+            
+            <motion.div className="absolute top-40 right-20" animate={{
+            x: [0, 30, 0],
+            scale: [1, 1.2, 1]
+          }} transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}>
+              <div className="w-6 h-6 bg-secondary/30 rounded-full blur-sm" />
+            </motion.div>
+            
+            <motion.div className="absolute bottom-40 left-1/4" animate={{
+            y: [0, -40, 0],
+            x: [0, 20, 0]
+          }} transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}>
+              <div className="w-3 h-3 bg-accent/40 rounded-full blur-sm" />
+            </motion.div>
+          </>
+        )}
       </div>
     </section>;
 };

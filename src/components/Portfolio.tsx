@@ -1,16 +1,30 @@
-import { HeroSection } from './sections/HeroSection';
-import { AboutSection } from './sections/AboutSection';
-import { SkillsSection } from './sections/SkillsSection';
-import { ProjectsSection } from './sections/ProjectsSection';
-import { ContactSection } from './sections/ContactSection';
+import { Suspense, lazy } from 'react';
+import { ThreeBackground } from './ui/ThreeBackground';
 import { AnimatedBackground } from './ui/AnimatedBackground';
+import { StaticBackground } from './ui/StaticBackground';
 import { motion } from 'framer-motion';
+import { useDevicePerformance } from '../hooks/use-device-performance';
+
+// Lazy load sections for better performance
+const HeroSection = lazy(() => import('./sections/HeroSection').then(module => ({ default: module.HeroSection })));
+const AboutSection = lazy(() => import('./sections/AboutSection').then(module => ({ default: module.AboutSection })));
+const SkillsSection = lazy(() => import('./sections/SkillsSection').then(module => ({ default: module.SkillsSection })));
+const ProjectsSection = lazy(() => import('./sections/ProjectsSection').then(module => ({ default: module.ProjectsSection })));
+const ContactSection = lazy(() => import('./sections/ContactSection').then(module => ({ default: module.ContactSection })));
 
 export const Portfolio = () => {
+  const performance = useDevicePerformance();
+  
   return (
     <div className="relative min-h-screen bg-background overflow-hidden">
-      {/* Animated Background */}
-      <AnimatedBackground />
+      {/* Background - Performance-based selection */}
+      {performance === 'low' ? (
+        <StaticBackground />
+      ) : performance === 'medium' ? (
+        <AnimatedBackground />
+      ) : (
+        <ThreeBackground quality="high" />
+      )}
       
       {/* Navigation */}
       <motion.nav
@@ -37,19 +51,29 @@ export const Portfolio = () => {
 
       {/* Main Content */}
       <main>
-        <HeroSection />
-        <div id="about">
-          <AboutSection />
-        </div>
-        <div id="skills">
-          <SkillsSection />
-        </div>
-        <div id="projects">
-          <ProjectsSection />
-        </div>
-        <div id="contact">
-          <ContactSection />
-        </div>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+          <HeroSection />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+          <div id="about">
+            <AboutSection />
+          </div>
+        </Suspense>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+          <div id="skills">
+            <SkillsSection />
+          </div>
+        </Suspense>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+          <div id="projects">
+            <ProjectsSection />
+          </div>
+        </Suspense>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+          <div id="contact">
+            <ContactSection />
+          </div>
+        </Suspense>
       </main>
 
       {/* Footer */}

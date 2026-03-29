@@ -1,9 +1,27 @@
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useRef, useMemo } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Suspense, useRef, useMemo } from 'react';
 import * as THREE from 'three';
 
+// Performance optimization component
+function PerformanceOptimizer() {
+  const { gl, scene } = useThree();
+  
+  useMemo(() => {
+    // Optimize renderer
+    gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    gl.shadowMap.enabled = false;
+    gl.shadowMap.type = THREE.PCFSoftShadowMap;
+    gl.outputColorSpace = THREE.SRGBColorSpace;
+    
+    // Optimize scene
+    scene.fog = new THREE.Fog(0x000000, 10, 50);
+  }, [gl, scene]);
+  
+  return null;
+}
+
 // Floating cube component
-function FloatingCube({ position, color }: { position: [number, number, number], color: string }) {
+function FloatingCube({ position, color, quality = 'high' }: { position: [number, number, number], color: string, quality?: 'low' | 'high' }) {
   const mesh = useRef<THREE.Mesh>(null!);
   
   useFrame((state) => {
@@ -24,7 +42,7 @@ function FloatingCube({ position, color }: { position: [number, number, number],
 }
 
 // Floating sphere component
-function FloatingSphere({ position, color }: { position: [number, number, number], color: string }) {
+function FloatingSphere({ position, color, quality = 'high' }: { position: [number, number, number], color: string, quality?: 'low' | 'high' }) {
   const mesh = useRef<THREE.Mesh>(null!);
   
   useFrame((state) => {
@@ -37,27 +55,31 @@ function FloatingSphere({ position, color }: { position: [number, number, number
     mesh.current.scale.setScalar(1 + Math.sin(time * 3 + position[1]) * 0.2);
   });
 
+  const segments = quality === 'low' ? 8 : 16;
+
   return (
     <mesh ref={mesh} position={position}>
-      <sphereGeometry args={[0.6, 16, 16]} />
+      <sphereGeometry args={[0.6, segments, segments]} />
       <meshStandardMaterial color={color} transparent opacity={0.5} />
     </mesh>
   );
 }
 
 // Particle system
-function Particles() {
+function Particles({ quality = 'high' }: { quality?: 'low' | 'high' }) {
   const points = useRef<THREE.Points>(null!);
   
+  const particleCount = quality === 'low' ? 50 : 100;
+  
   const particlesPosition = useMemo(() => {
-    const positions = new Float32Array(100 * 3);
-    for (let i = 0; i < 100; i++) {
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 20;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
     }
     return positions;
-  }, []);
+  }, [particleCount]);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -82,43 +104,48 @@ function Particles() {
 }
 
 // Main scene
-function Scene() {
+function Scene({ quality = 'high' }: { quality?: 'low' | 'high' }) {
   return (
     <>
+      <PerformanceOptimizer />
       <ambientLight intensity={0.3} />
       <directionalLight position={[10, 10, 5]} intensity={0.5} />
       <pointLight position={[-10, -10, -10]} color="#3b82f6" intensity={0.3} />
       
-      <Particles />
+      <Particles quality={quality} />
       
       {/* Floating cubes */}
-      <FloatingCube position={[-4, 2, -2]} color="#8b5cf6" />
-      <FloatingCube position={[4, -1, -3]} color="#3b82f6" />
-      <FloatingCube position={[-2, -3, -1]} color="#06d6a0" />
-      <FloatingCube position={[6, 1, -4]} color="#f59e0b" />
-      <FloatingCube position={[-6, -1, -3]} color="#ef4444" />
-      <FloatingCube position={[2, 4, -2]} color="#8b5cf6" />
+      <FloatingCube position={[-4, 2, -2]} color="#8b5cf6" quality={quality} />
+      <FloatingCube position={[4, -1, -3]} color="#3b82f6" quality={quality} />
+      <FloatingCube position={[-2, -3, -1]} color="#06d6a0" quality={quality} />
+      <FloatingCube position={[6, 1, -4]} color="#f59e0b" quality={quality} />
+      <FloatingCube position={[-6, -1, -3]} color="#ef4444" quality={quality} />
+      <FloatingCube position={[2, 4, -2]} color="#8b5cf6" quality={quality} />
       
       {/* Floating spheres */}
-      <FloatingSphere position={[3, 3, -4]} color="#f59e0b" />
-      <FloatingSphere position={[-5, -2, -2]} color="#ef4444" />
-      <FloatingSphere position={[1, -4, -5]} color="#8b5cf6" />
-      <FloatingSphere position={[-3, 4, -3]} color="#3b82f6" />
-      <FloatingSphere position={[5, -3, -4]} color="#06d6a0" />
-      <FloatingSphere position={[7, 2, -5]} color="#f59e0b" />
-      <FloatingSphere position={[-7, 1, -2]} color="#ef4444" />
+      <FloatingSphere position={[3, 3, -4]} color="#f59e0b" quality={quality} />
+      <FloatingSphere position={[-5, -2, -2]} color="#ef4444" quality={quality} />
+      <FloatingSphere position={[1, -4, -5]} color="#8b5cf6" quality={quality} />
+      <FloatingSphere position={[-3, 4, -3]} color="#3b82f6" quality={quality} />
+      <FloatingSphere position={[5, -3, -4]} color="#06d6a0" quality={quality} />
+      <FloatingSphere position={[7, 2, -5]} color="#f59e0b" quality={quality} />
+      <FloatingSphere position={[-7, 1, -2]} color="#ef4444" quality={quality} />
     </>
   );
 }
 
-export const ThreeBackground = () => {
+export const ThreeBackground = ({ quality = 'high' }: { quality?: 'low' | 'high' }) => {
   return (
     <div className="absolute inset-0 w-full h-full">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 60 }}
         style={{ background: 'transparent' }}
+        dpr={quality === 'low' ? 1 : [1, 2]}
+        performance={{ min: 0.5 }}
       >
-        <Scene />
+        <Suspense fallback={null}>
+          <Scene quality={quality} />
+        </Suspense>
       </Canvas>
     </div>
   );
