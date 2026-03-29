@@ -5,7 +5,6 @@ import { Textarea } from '../ui/textarea';
 import { Badge } from '../ui/badge';
 import { Mail, MapPin, MessageSquare, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -35,24 +34,32 @@ export const ContactSection = () => {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
-        body: formData
+      // Create FormData for Google Forms submission
+      const formData = new FormData();
+      formData.append('entry.1234567890', formData.name); // Replace with your actual entry ID
+      formData.append('entry.0987654321', formData.email); // Replace with your actual entry ID
+      formData.append('entry.1122334455', formData.project || ''); // Replace with your actual entry ID
+      formData.append('entry.5566778899', formData.message); // Replace with your actual entry ID
+
+      // Submit to Google Forms with timeout for better UX
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+      const response = await fetch('https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse', {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors',
+        signal: controller.signal
       });
 
-      if (error) {
-        throw error;
-      }
+      clearTimeout(timeoutId);
 
-      if (data?.error) {
-        throw new Error(data.error);
-      }
-
-      // Success
+      // Google Forms returns opaque response with no-cors, assume success
       setSubmitStatus({
         type: 'success',
         message: 'Thank you! Your message has been sent successfully. I\'ll get back to you within 24-48 hours.'
       });
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -60,12 +67,18 @@ export const ContactSection = () => {
         project: '',
         message: ''
       });
-      
+
     } catch (error: any) {
       console.error('Error submitting form:', error);
+
+      // Provide specific error messages based on error type
+      const errorMessage = error.name === 'AbortError'
+        ? 'Request timed out. Please check your internet connection and try again.'
+        : 'Failed to send message. Please contact me directly at vivekatkari910@gmail.com';
+
       setSubmitStatus({
         type: 'error',
-        message: error.message || 'Failed to send message. Please try again or contact me directly at vivekatkari910@gmail.com'
+        message: errorMessage
       });
     } finally {
       setIsSubmitting(false);
