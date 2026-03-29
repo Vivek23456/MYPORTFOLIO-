@@ -10,6 +10,7 @@ const HeroSection = lazy(() => import('./sections/HeroSection').then(module => (
 const AboutSection = lazy(() => import('./sections/AboutSection').then(module => ({ default: module.AboutSection })));
 const SkillsSection = lazy(() => import('./sections/SkillsSection').then(module => ({ default: module.SkillsSection })));
 const ProjectsSection = lazy(() => import('./sections/ProjectsSection').then(module => ({ default: module.ProjectsSection })));
+const GitHubReposSection = lazy(() => import('./sections/GitHubReposSection').then(module => ({ default: module.GitHubReposSection })));
 const ContactSection = lazy(() => import('./sections/ContactSection').then(module => ({ default: module.ContactSection })));
 
 export const Portfolio = () => {
@@ -43,7 +44,8 @@ export const Portfolio = () => {
               <a href="#about" className="text-muted-foreground hover:text-primary transition-colors scroll-smooth">About</a>
               <a href="#skills" className="text-muted-foreground hover:text-secondary transition-colors scroll-smooth">Skills</a>
               <a href="#projects" className="text-muted-foreground hover:text-accent transition-colors scroll-smooth">Projects</a>
-              <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors scroll-smooth">Contact</a>
+              <a href="#github" className="text-muted-foreground hover:text-primary transition-colors scroll-smooth">GitHub</a>
+              <a href="#contact" className="text-muted-foreground hover:text-secondary transition-colors scroll-smooth">Contact</a>
             </div>
           </div>
         </div>
@@ -67,6 +69,11 @@ export const Portfolio = () => {
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
           <div id="projects">
             <ProjectsSection />
+          </div>
+        </Suspense>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+          <div id="github">
+            <GitHubReposSection featuredRepos={['vault-repo']} />
           </div>
         </Suspense>
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
