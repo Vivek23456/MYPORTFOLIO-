@@ -140,8 +140,8 @@ export const AboutSection = () => {
                     transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                   />
                   <a
-                    href="/Vivek_Resume.pdf.pdf"  // Place your resume in public folder
-                    download
+                    href="/Vivek_Resume.pdf"
+                    download="Vivek_Resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative px-6 py-3 bg-card/80 backdrop-blur-sm border border-primary/30 rounded-lg text-lg font-semibold text-foreground hover:text-primary transition-colors flex items-center justify-center"
